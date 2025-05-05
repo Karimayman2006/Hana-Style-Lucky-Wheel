@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>عجلة الحظ - HANA STYLE</title>
+  <style>
+    body { text-align: center; font-family: sans-serif; background-color: #fff; }
+    #logo {
+      margin-top: 20px;
+      width: 200px;
+    }
+    #wheel {
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 10px solid #333;
+      margin: 30px auto;
+      position: relative;
+      overflow: hidden;
+      transform: rotate(0deg);
+      transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    .segment {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 0%;
+      background-color: #f4b400;
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    #pointer {
+      width: 0; 
+      height: 0; 
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 30px solid red;
+      margin: auto;
+      position: relative;
+      top: -20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #f4b400;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <img id="logo" src="/mnt/data/file-Nnn7kUXt4NcnupYVGNTxsK" alt="HANA STYLE Logo">
+  <h1>عجلة الحظ</h1>
+  <div id="pointer"></div>
+  <div id="wheel"></div>
+  <button onclick="spinWheel()">لف العجلة</button>  <script>
+    const items = [
+      "خصم 5 ج",
+      "خصم 10 ج",
+      "خصم 50 ج",
+      "خصم 100 ج",
+      "خصم 200 ج",
+      "خصم 100%",
+      "حظ أوفر في المرة القادمة",
+      "حاول مرة أخرى"
+    ];
+
+    const allowedResults = [
+      "خصم 5 ج",
+      "خصم 10 ج",
+      "حظ أوفر في المرة القادمة",
+      "حاول مرة أخرى"
+    ];
+
+    const wheel = document.getElementById("wheel");
+    const numSegments = items.length;
+
+    // Create segments
+    for (let i = 0; i < numSegments; i++) {
+      const segment = document.createElement("div");
+      segment.className = "segment";
+      segment.innerText = items[i];
+      segment.style.transform = `rotate(${(360 / numSegments) * i}deg) skewY(-${90 - (360 / numSegments)}deg)`;
+      segment.style.backgroundColor = i % 2 === 0 ? "#f4b400" : "#fbbc05";
+      wheel.appendChild(segment);
+    }
+
+    let currentAngle = 0;
+
+    function spinWheel() {
+      const result = allowedResults[Math.floor(Math.random() * allowedResults.length)];
+      const index = items.indexOf(result);
+      const anglePerSegment = 360 / numSegments;
+      const targetAngle = 360 - (index * anglePerSegment) + (Math.floor(Math.random() * anglePerSegment));
+      const spins = 5;
+      currentAngle += spins * 360 + targetAngle;
+      wheel.style.transform = `rotate(${currentAngle}deg)`;
+    }
+  </script></body>
+</html>
